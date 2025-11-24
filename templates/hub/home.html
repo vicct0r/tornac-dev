@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center min-vh-100">
+            <div class="col-lg-6">
+                <div class="hero-content">
+                    <h1 class="display-4 fw-bold mb-4">Criando Soluções com Código</h1>
+                    <p class="lead mb-4">Explore meus projetos e aplicações desenvolvidas com as mais modernas
+                        tecnologias e melhores práticas de desenvolvimento.</p>
+                    <div class="hero-badges">
+                        <span class="badge bg-light text-dark">Django</span>
+                        <span class="badge bg-light text-dark">Python</span>
+                        <span class="badge bg-light text-dark">Bootstrap</span>
+                        <span class="badge bg-light text-dark">JavaScript</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-visual">
+                    <div class="floating-card card-1">
+                        <i class="bi bi-laptop"></i>
+                    </div>
+                    <div class="floating-card card-2">
+                        <i class="bi bi-phone"></i>
+                    </div>
+                    <div class="floating-card card-3">
+                        <i class="bi bi-database"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projetos Section -->
+<section id="projetos" class="section-padding">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <h2 class="display-5 fw-bold">Meus Projetos</h2>
+            <p class="lead text-muted">Aplicações e sistemas desenvolvidos</p>
+        </div>
+
+        <!-- Grid de Projetos -->
+        <div class="row g-4 projects-grid">
+        {% if aplicativos %}
+        {% for app in aplicativos %}
+            <div class="col-md-6 col-lg-4 project-item" data-category="web">
+                <div class="project-card">
+                    <div class="project-image">
+                        {% if app.imagem %}
+                            <img src="{{ app.imagem.card.url }}" 
+                                 alt="{{ app.titulo }}"
+                                 class="project-img">
+                        {% else %}
+                            <!-- Fallback para quando não há imagem -->
+                            <div class="image-placeholder bg-primary">
+                                <i class="bi bi-app"></i>
+                            </div>
+                        {% endif %}
+                        {% if app.url %}
+                        <div class="project-overlay">
+                            <a href="{{ app.url }}" class="btn btn-light btn-view">
+                                <i class="bi bi-eye me-2"></i>Ver Projeto
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="project-content">
+                        <div class="project-meta">
+                            <span class="project-category">{{ app.categoria }}</span>
+                            <span class="project-status {{ app.status }}">{{ app.get_status_display }}</span>
+                        </div>
+                        <h4 class="project-title">{{ app.titulo }}</h4>
+                        <p class="project-description">{{ app.descricao }}</p>
+                        <div class="project-tech">
+                            {% for tg in app.tag_all %}
+                            <span class="tech-tag">{{ tg.nome }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        {% else %}
+        <p>Ainda não temos nenhum aplicativo.</p>
+        {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Sobre Section -->
+<section id="sobre" class="section-padding bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="about-content">
+                    <h2 class="display-5 fw-bold mb-4">Sobre o Portfólio</h2>
+                    <p class="lead mb-4">Esta plataforma reúne os projetos que desenvolvi ao longo da minha jornada como
+                        programador.</p>
+                    <p class="mb-4">Cada aplicação representa um desafio único e uma oportunidade de aprender novas
+                        tecnologias e melhorar minhas habilidades.</p>
+                    <div class="about-stats">
+                        <div class="stat">
+                            <h4 class="fw-bold">15+</h4>
+                            <p class="text-muted">Projetos Desenvolvidos</p>
+                        </div>
+                        <div class="stat">
+                            <h4 class="fw-bold">3+</h4>
+                            <p class="text-muted">Anos de Experiência</p>
+                        </div>
+                        <div class="stat">
+                            <h4 class="fw-bold">10+</h4>
+                            <p class="text-muted">Tecnologias Dominadas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="about-visual">
+                    <div class="tech-cloud">
+                        <span class="tech-item large">Django</span>
+                        <span class="tech-item medium">Python</span>
+                        <span class="tech-item small">JavaScript</span>
+                        <span class="tech-item large">React</span>
+                        <span class="tech-item medium">PostgreSQL</span>
+                        <span class="tech-item small">Docker</span>
+                        <span class="tech-item medium">Bootstrap</span>
+                        <span class="tech-item large">REST API</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contato Section -->
+<section id="contato" class="section-padding">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="display-5 fw-bold mb-4">Vamos Trabalar Juntos?</h2>
+                <p class="lead mb-5">Interessado em algum projeto ou quer discutir uma ideia? Entre em contato!</p>
+                <div class="contact-buttons">
+                    <a href="mailto:seuemail@exemplo.com" class="btn btn-primary btn-lg me-3">
+                        <i class="bi bi-envelope me-2"></i>Enviar Email
+                    </a>
+                    <a href="https://github.com/seuusuario" class="btn btn-outline-dark btn-lg">
+                        <i class="bi bi-github me-2"></i>Ver GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
