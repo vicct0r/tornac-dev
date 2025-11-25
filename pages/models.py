@@ -25,6 +25,7 @@ class Aplicativo(models.Model):
     tags = models.ManyToManyField(Tag, related_name='taged', blank=True, null=True)
     categoria = models.CharField(max_length=150)
     url = models.URLField(blank=True, null=True)
+    repositorio = models.URLField(blank=True, null=True)
     imagem = StdImageField(
         upload_to='projetos/',
         variations={

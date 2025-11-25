@@ -18,13 +18,15 @@ class HomePageTemplateView(generic.TemplateView):
 
 
 class AplicativoCreateView(LoginRequiredMixin, generic.CreateView):
-    template_name = 'projetos/create.html'
+    template_name = 'projetos/post.html'
+    model = Aplicativo
     form_class = AplicativoModelForm
     success_url = reverse_lazy('pages:home')
 
 
 class AplicativoUpdateView(LoginRequiredMixin, generic.UpdateView):
-    template_name = 'projetos/update.html'
+    template_name = 'projetos/post.html'
+    model = Aplicativo
     form_class = AplicativoModelForm
 
 
