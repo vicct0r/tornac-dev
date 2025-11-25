@@ -2,7 +2,10 @@ from django.db import models
 from stdimage import StdImageField
 
 class Tag(models.Model):
-    nome = models.CharField()
+    nome = models.CharField(unique=True, max_length=150)
+
+    def __str__(self):
+        return self.nome
 
 
 class Aplicativo(models.Model):
