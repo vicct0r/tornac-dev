@@ -1,0 +1,312 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home_styles.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center min-vh-100">
+            <div class="col-lg-6">
+                <div class="hero-content">
+                    <h1 class="display-4 fw-bold mb-4">Hub de Aplicações</h1>
+                    <p class="lead mb-4">Central de todos os sistemas, ferramentas e serviços disponíveis.
+                        Este é o ponto de partida para acessar tudo o que está funcionando no momento.</p>
+                    <div class="hero-badges">
+                        <span class="badge bg-light text-dark">Sistemas</span>
+                        <span class="badge bg-light text-dark">Ferramentas</span>
+                        <span class="badge bg-light text-dark">Serviços</span>
+                        <span class="badge bg-light text-dark">APIs</span>
+                    </div>
+
+                    <!-- Botão para criar novo aplicativo (apenas para superusers) -->
+                    {% if user.is_superuser %}
+                    <div class="mt-4">
+                        <a href="{% url 'pages:create' %}" class="btn btn-success">
+                            <i class="bi bi-plus-circle me-2"></i>Adicionar Aplicação
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-visual">
+                    <div class="floating-card card-1">
+                        <i class="bi bi-globe"></i>
+                    </div>
+                    <div class="floating-card card-2">
+                        <i class="bi bi-tools"></i>
+                    </div>
+                    <div class="floating-card card-3">
+                        <i class="bi bi-server"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Aplicações Section -->
+<section id="aplicacoes" class="section-padding">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <h2 class="display-5 fw-bold">Aplicações Disponíveis</h2>
+            <p class="lead text-muted">Todos os sistemas e ferramentas em operação</p>
+        </div>
+
+        <!-- Grid de Aplicações -->
+        <div class="row g-3 aplicacoes-grid">
+            {% if aplicativos %}
+            {% for app in aplicativos %}
+            <div class="col-12 col-sm-6 col-lg-4 aplicacao-item">
+                <div class="card aplicacao-card h-100 border-0 shadow-sm">
+                    <!-- Header com Imagem -->
+                    <div class="aplicacao-image position-relative">
+                        {% if app.imagem %}
+                        <img src="{{ app.imagem.url }}" alt="{{ app.titulo }}" class="card-img-top aplicacao-img"
+                            style="height: 160px; object-fit: cover;">
+                        {% else %}
+                        <div class="image-placeholder bg-primary d-flex align-items-center justify-content-center text-white"
+                            style="height: 160px;">
+                            <i class="bi bi-app-indicator fs-1"></i>
+                        </div>
+                        {% endif %}
+
+                        <!-- Badges no canto superior -->
+                        <div class="position-absolute top-0 start-0 m-2">
+                            <span class="badge bg-light text-dark aplicacao-categoria">{{ app.categoria }}</span>
+                        </div>
+                        <div class="position-absolute top-0 end-0 m-2">
+                            <span class="badge aplicacao-status {{ app.status }}">{{ app.get_status_display }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="card-body d-flex flex-column">
+                        <!-- Título e Descrição -->
+                        <h5 class="card-title aplicacao-titulo mb-2">{{ app.titulo }}</h5>
+                        <p class="card-text aplicacao-descricao text-muted small mb-3 flex-grow-1">
+                            {{ app.descricao }}
+                        </p>
+
+                        <!-- Botões de Ação -->
+                        <div class="aplicacao-actions mb-3">
+                            <div class="row g-2">
+                                {% if app.url %}
+                                <div class="col">
+                                    <a href="{{ app.url }}"
+                                        class="btn btn-primary btn-sm w-100 d-flex align-items-center justify-content-center"
+                                        target="_blank">
+                                        <i class="bi bi-box-arrow-up-right me-2"></i>
+                                        <span>Acessar</span>
+                                    </a>
+                                </div>
+                                {% endif %}
+
+                                {% if app.repositorio %}
+                                <div class="col">
+                                    <a href="{{ app.repositorio }}"
+                                        class="btn btn-outline-dark btn-sm w-100 d-flex align-items-center justify-content-center"
+                                        target="_blank">
+                                        <i class="bi bi-github me-2"></i>
+                                        <span>Código</span>
+                                    </a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Tags Tecnológicas -->
+                        {% if app.tags.all %}
+                        <div class="aplicacao-tech mb-3">
+                            <div class="d-flex flex-wrap gap-1">
+                                {% for tg in app.tags.all %}
+                                <span class="badge bg-light text-dark tech-tag">{{ tg.nome }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <!-- Controles de Admin -->
+                        {% if user.is_superuser %}
+                        <div class="admin-controls mt-auto pt-2 border-top">
+                            <div class="d-flex justify-content-end gap-2">
+                                <a href="{% url 'pages:update' app.pk %}" class="btn btn-warning btn-sm">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal{{ app.pk }}">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal de Confirmação de Exclusão -->
+            {% if user.is_superuser %}
+            <div class="modal fade" id="deleteModal{{ app.pk }}" tabindex="-1"
+                aria-labelledby="deleteModalLabel{{ app.pk }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel{{ app.pk }}">Confirmar Exclusão</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Tem certeza que deseja remover a aplicação <strong>"{{ app.titulo }}"</strong>?</p>
+                            <p class="text-muted">Esta ação não pode ser desfeita.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <form method="post" action="{% url 'pages:delete' app.pk %}" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Remover</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% else %}
+            <div class="col-12 text-center">
+                <div class="empty-state">
+                    <i class="bi bi-inboxes display-1 text-muted mb-3"></i>
+                    <h4 class="text-muted">Nenhuma aplicação cadastrada</h4>
+                    <p class="text-muted">As aplicações aparecerão aqui quando forem adicionadas.</p>
+                    {% if user.is_superuser %}
+                    <a href="{% url 'pages:create' %}" class="btn btn-primary mt-3">
+                        <i class="bi bi-plus-circle me-2"></i>Adicionar Primeira Aplicação
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Resto do template permanece igual -->
+<!-- Sobre o Hub Section -->
+<section id="sobre" class="section-padding bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="sobre-content">
+                    <h2 class="display-5 fw-bold mb-4">Sobre Este Hub</h2>
+                    <p class="lead mb-4">Este hub serve como ponto central para todas as aplicações, sistemas e
+                        ferramentas em operação.</p>
+
+                    <div class="sobre-lista">
+                        <div class="sobre-item">
+                            <i class="bi bi-check-circle-fill text-primary me-3"></i>
+                            <span>Acesso rápido a todos os sistemas</span>
+                        </div>
+                        <div class="sobre-item">
+                            <i class="bi bi-check-circle-fill text-primary me-3"></i>
+                            <span>Status atualizado de cada aplicação</span>
+                        </div>
+                        <div class="sobre-item">
+                            <i class="bi bi-check-circle-fill text-primary me-3"></i>
+                            <span>Organização centralizada</span>
+                        </div>
+                        <div class="sobre-item">
+                            <i class="bi bi-check-circle-fill text-primary me-3"></i>
+                            <span>Informações de acesso direto</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="sobre-visual">
+                    <div class="hub-illustration">
+                        <div class="hub-visual-simples">
+                            <!-- Hub Central Simples -->
+                            <div class="hub-central-simples">
+                                <i class="bi bi-hub"></i>
+                                <span>Hub</span>
+                            </div>
+
+                            <!-- Aplicações conectadas -->
+                            <div class="hub-apps-simples">
+                                <div class="hub-app-simples">
+                                    <i class="bi bi-globe"></i>
+                                    <span>Sistemas Web</span>
+                                </div>
+                                <div class="hub-app-simples">
+                                    <i class="bi bi-tools"></i>
+                                    <span>Ferramentas</span>
+                                </div>
+                                <div class="hub-app-simples">
+                                    <i class="bi bi-server"></i>
+                                    <span>Serviços</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Status Section -->
+<section id="status" class="section-padding">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="status-info text-center">
+                    <h3 class="fw-bold mb-4">Legenda de Status</h3>
+                    <div class="row justify-content-center">
+                        <div class="col-md-4 mb-3">
+                            <div class="status-item">
+                                <span class="status-indicator completed"></span>
+                                <div>
+                                    <strong>Concluído</strong>
+                                    <p class="text-muted mb-0">Sistema em produção</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="status-item">
+                                <span class="status-indicator development"></span>
+                                <div>
+                                    <strong>Em Desenvolvimento</strong>
+                                    <p class="text-muted mb-0">Em fase de construção</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+
+<!-- Contato Section -->
+<section id="contato" class="section-padding bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="display-5 fw-bold mb-4">Vamos Construir Algo Juntos?</h2>
+                <p class="lead mb-5">Todos os projetos são open-source e estou sempre aberto a colaborações,
+                    contribuições e parcerias em desenvolvimento. Sua participação pode ajudar a evoluir esta
+                    plataforma!</p>
+                <div class="contato-buttons">
+                    <a href="mailto:v1ctor_inacio@proton.me" class="btn btn-primary btn-lg me-3">
+                        <i class="bi bi-envelope me-2"></i>Email
+                    </a>
+                    <a href="https://github.com/vicct0r/tornac-dev" class="btn btn-outline-dark btn-lg">
+                        <i class="bi bi-github me-2"></i>Ver Código
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

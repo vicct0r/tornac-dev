@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container min-vh-100 d-flex align-items-center">
+    <div class="row justify-content-center w-100">
+        <div class="col-md-6 text-center">
+            <!-- Ícone -->
+            <div class="mb-4">
+                <i class="bi bi-bug display-1 text-danger"></i>
+            </div>
+            
+            <!-- Título -->
+            <h1 class="display-4 fw-bold text-dark mb-3">500</h1>
+            <h2 class="h3 text-muted mb-4">Erro Interno do Servidor</h2>
+            
+            <!-- Mensagem -->
+            <p class="lead text-muted mb-5">
+                Algo deu errado no servidor. 
+                Provavelmente já estou trabalhando para resolver.
+            </p>
+            
+            <!-- Botões de Ação -->
+            <div class="d-flex gap-3 justify-content-center flex-wrap">
+                <a href="{% url 'pages:home' %}" class="btn btn-primary btn-lg">
+                    <i class="bi bi-house me-2"></i>Página Inicial
+                </a>
+                <a href="{% url 'pages:home' %}#aplicacoes" class="btn btn-outline-primary btn-lg">
+                    <i class="bi bi-grid me-2"></i>Ver Aplicações
+                </a>
+            </div>
+            
+            <!-- Tentar recarregar -->
+            <div class="mt-4">
+                <button onclick="window.location.reload()" class="btn btn-outline-warning">
+                    <i class="bi bi-arrow-clockwise me-2"></i>Tentar Novamente
+                </button>
+            </div>
+            
+            <!-- Contato -->
+            <div class="mt-5">
+                <p class="text-muted small">
+                    Demorei corrigir o erro? 
+                    <a href="mailto:v1ctor_inacio@proton.me" class="text-decoration-none">Envie um e-mail</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        padding-top: 0 !important;
+    }
+    
+    .min-vh-100 {
+        min-height: 100vh;
+    }
+</style>
+{% endblock %}
