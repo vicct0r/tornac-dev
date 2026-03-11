@@ -1,54 +1,65 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block extra_css %}
+<style>
+    body { padding-top: 0 !important; }
+    .error-page { min-height: 100vh; display: flex; align-items: center; }
+    .error-code {
+        font-size: 6rem;
+        font-weight: 800;
+        letter-spacing: -0.05em;
+        background: linear-gradient(135deg, var(--accent) 0%, #a78bfa 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+    }
+    .error-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: var(--accent-glow);
+        border: 1px solid var(--border-color);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--accent);
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="container min-vh-100 d-flex align-items-center">
-    <div class="row justify-content-center w-100">
-        <div class="col-md-6 text-center">
-            <!-- Ícone -->
-            <div class="mb-4">
-                <i class="bi bi-map display-1 text-info"></i>
-            </div>
-            
-            <!-- Título -->
-            <h1 class="display-4 fw-bold text-dark mb-3">404</h1>
-            <h2 class="h3 text-muted mb-4">Página Não Encontrada</h2>
-            
-            <!-- Mensagem -->
-            <p class="lead text-muted mb-5">
-                A página que você está procurando não existe ou foi movida.
-            </p>
-            
-            <!-- Botões de Ação -->
-            <div class="d-flex gap-3 justify-content-center flex-wrap">
-                <a href="{% url 'pages:home' %}" class="btn btn-primary btn-lg">
-                    <i class="bi bi-house me-2"></i>Página Inicial
-                </a>
-                <a href="{% url 'pages:home' %}#aplicacoes" class="btn btn-outline-primary btn-lg">
-                    <i class="bi bi-grid me-2"></i>Explorar Aplicações
-                </a>
-            </div>
-            
-            <!-- Sugestão -->
-            <div class="mt-5">
-                <p class="text-muted small">
-                    Verifique o URL ou volte para a 
-                    <a href="{% url 'pages:home' %}" class="text-decoration-none">página inicial</a>.
+<div class="error-page">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <div class="error-icon">
+                    <i class="bi bi-compass"></i>
+                </div>
+                <div class="error-code mb-3">404</div>
+                <h2 class="h4 mb-3" style="color: var(--text-primary);">Pagina nao encontrada</h2>
+                <p class="mb-5" style="color: var(--text-secondary);">
+                    A pagina que voce esta procurando nao existe ou foi movida.
                 </p>
+                <div class="d-flex gap-3 justify-content-center flex-wrap">
+                    <a href="{% url 'pages:home' %}" class="btn btn-accent btn-lg">
+                        <i class="bi bi-house me-2"></i>Inicio
+                    </a>
+                    <a href="{% url 'pages:home' %}#aplicacoes" class="btn btn-outline-accent btn-lg">
+                        <i class="bi bi-grid me-2"></i>Ver Projetos
+                    </a>
+                </div>
+                <div class="mt-5">
+                    <p class="small" style="color: var(--text-muted);">
+                        Verifique o URL ou volte para o
+                        <a href="{% url 'pages:home' %}" style="color: var(--accent); text-decoration: none;">inicio</a>.
+                    </p>
+                </div>
             </div>
         </div>
     </div>
 </div>
-{% endblock %}
-
-{% block extra_css %}
-<style>
-    body {
-        padding-top: 0 !important;
-    }
-    
-    .min-vh-100 {
-        min-height: 100vh;
-    }
-</style>
 {% endblock %}
