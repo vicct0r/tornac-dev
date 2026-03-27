@@ -6,39 +6,51 @@
 {% endblock %}
 
 {% block content %}
+<!-- Hero -->
 <section class="hero-section">
     <div class="container">
         <div class="row align-items-center min-vh-100">
-            <div class="col-lg-6">
+            <div class="col-lg-7">
                 <div class="hero-content">
-                    <h1 class="display-4 fw-bold mb-4">Hub de Projetos</h1>
-                    <p class="lead mb-4">Central de todos os meus projetos, sistemas e ferramentas.
-                        Acesse tudo o que esta rodando a partir daqui.</p>
+                    <p class="hero-greeting">Ola, eu sou</p>
+                    <h1 class="display-3 fw-bold mb-3">Victor Inacio</h1>
+                    <h2 class="hero-role mb-4">Backend Developer</h2>
+                    <p class="lead mb-4">Foco em <strong>Python</strong> e <strong>Django</strong> — construindo plataformas web
+                        com arquitetura em camadas, filas assincronas e infraestrutura gerenciada em VPS propria.</p>
                     <div class="hero-badges">
-                        <span class="badge">Sistemas</span>
-                        <span class="badge">Ferramentas</span>
-                        <span class="badge">APIs</span>
+                        <span class="badge">Python</span>
+                        <span class="badge">Django</span>
+                        <span class="badge">PostgreSQL</span>
+                        <span class="badge">Docker</span>
+                        <span class="badge">AWS</span>
                     </div>
-
-                    {% if user.is_superuser %}
-                    <div class="mt-4">
-                        <a href="{% url 'pages:create' %}" class="btn btn-accent">
-                            <i class="bi bi-plus-circle me-2"></i>Adicionar Projeto
+                    <div class="hero-actions mt-4">
+                        <a href="#projetos" class="btn btn-accent btn-lg">
+                            <i class="bi bi-folder2-open me-2"></i>Ver Projetos
+                        </a>
+                        <a href="https://github.com/vicct0r" target="_blank" class="btn btn-outline-accent btn-lg">
+                            <i class="bi bi-github me-2"></i>GitHub
                         </a>
                     </div>
-                    {% endif %}
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-5 d-none d-lg-block">
                 <div class="hero-visual">
-                    <div class="floating-card card-1">
-                        <i class="bi bi-globe"></i>
-                    </div>
-                    <div class="floating-card card-2">
-                        <i class="bi bi-code-slash"></i>
-                    </div>
-                    <div class="floating-card card-3">
-                        <i class="bi bi-server"></i>
+                    <div class="terminal-window">
+                        <div class="terminal-header">
+                            <span class="terminal-dot red"></span>
+                            <span class="terminal-dot yellow"></span>
+                            <span class="terminal-dot green"></span>
+                        </div>
+                        <div class="terminal-body">
+                            <p><span class="terminal-prompt">$</span> whoami</p>
+                            <p class="terminal-output">backend-developer</p>
+                            <p><span class="terminal-prompt">$</span> python --version</p>
+                            <p class="terminal-output">Python 3.12</p>
+                            <p><span class="terminal-prompt">$</span> docker ps --format "table"</p>
+                            <p class="terminal-output">django &nbsp;nginx &nbsp;redis &nbsp;postgres</p>
+                            <p><span class="terminal-prompt">$</span> <span class="terminal-cursor">_</span></p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -46,108 +58,203 @@
     </div>
 </section>
 
-<section id="aplicacoes" class="section-padding">
+<!-- Sobre -->
+<section id="sobre" class="section-padding fade-in-section">
     <div class="container">
-        <div class="section-header text-center mb-5">
-            <h2 class="display-5 fw-bold">Projetos</h2>
-            <p class="lead">Todos os sistemas e ferramentas em operacao</p>
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="section-title mb-4">Sobre Mim</h2>
+                <p class="section-text">
+                    Desenvolvedor Backend cursando <strong>Ciencia da Computacao</strong> no Instituto Federal Goiano.
+                    Tenho projetos proprios em producao — plataformas web com arquitetura
+                    em camadas, filas assincronas e infraestrutura gerenciada em VPS propria.
+                </p>
+            </div>
         </div>
+    </div>
+</section>
 
-        <div class="row g-4 aplicacoes-grid">
-            {% if aplicativos %}
-            {% for app in aplicativos %}
-            <div class="col-12 col-sm-6 col-lg-4 aplicacao-item">
-                <div class="card aplicacao-card h-100">
-                    <div class="aplicacao-image position-relative">
-                        {% if app.imagem %}
-                        <img src="{{ app.imagem.url }}" alt="{{ app.titulo }}" class="card-img-top aplicacao-img"
-                            style="height: 160px; object-fit: cover;">
-                        {% else %}
-                        <div class="image-placeholder d-flex align-items-center justify-content-center"
-                            style="height: 160px;">
-                            <i class="bi bi-app-indicator fs-1"></i>
-                        </div>
-                        {% endif %}
+<!-- Habilidades -->
+<section id="habilidades" class="section-padding section-dark fade-in-section">
+    <div class="container">
+        <h2 class="section-title text-center mb-5">Habilidades Tecnicas</h2>
 
-                        <div class="position-absolute top-0 start-0 m-2">
-                            <span class="badge aplicacao-categoria">{{ app.categoria }}</span>
-                        </div>
-                        <div class="position-absolute top-0 end-0 m-2">
-                            <span class="badge aplicacao-status {{ app.status }}">{{ app.get_status_display }}</span>
-                        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="bi bi-code-slash"></i>
                     </div>
-
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title aplicacao-titulo mb-2">{{ app.titulo }}</h5>
-                        <p class="card-text aplicacao-descricao small mb-3 flex-grow-1">
-                            {{ app.descricao }}
-                        </p>
-
-                        <div class="aplicacao-actions mb-3">
-                            <div class="row g-2">
-                                {% if app.url %}
-                                <div class="col">
-                                    <a href="{{ app.url }}"
-                                        class="btn btn-primary btn-sm w-100 d-flex align-items-center justify-content-center"
-                                        target="_blank">
-                                        <i class="bi bi-box-arrow-up-right me-2"></i>
-                                        <span>Acessar</span>
-                                    </a>
-                                </div>
-                                {% endif %}
-
-                                {% if app.repositorio %}
-                                <div class="col">
-                                    <a href="{{ app.repositorio }}"
-                                        class="btn btn-outline-dark btn-sm w-100 d-flex align-items-center justify-content-center"
-                                        target="_blank">
-                                        <i class="bi bi-github me-2"></i>
-                                        <span>Codigo</span>
-                                    </a>
-                                </div>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        {% if app.tags.all %}
-                        <div class="aplicacao-tech mb-3">
-                            <div class="d-flex flex-wrap gap-1">
-                                {% for tg in app.tags.all %}
-                                <span class="badge tech-tag">{{ tg.nome }}</span>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        {% endif %}
-
-                        {% if user.is_superuser %}
-                        <div class="admin-controls mt-auto pt-2 border-top">
-                            <div class="d-flex justify-content-end gap-2">
-                                <a href="{% url 'pages:update' app.pk %}" class="btn btn-warning btn-sm">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#deleteModal{{ app.pk }}">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                        {% endif %}
+                    <h5>Linguagens</h5>
+                    <div class="skill-tags">
+                        <span>Python</span>
+                        <span>Bash</span>
+                        <span>HTML</span>
+                        <span>CSS</span>
                     </div>
                 </div>
             </div>
 
+            <div class="col-md-6 col-lg-4">
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="bi bi-layers"></i>
+                    </div>
+                    <h5>Frameworks</h5>
+                    <div class="skill-tags">
+                        <span>Django</span>
+                        <span>DRF</span>
+                        <span>Bootstrap</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="bi bi-database"></i>
+                    </div>
+                    <h5>Banco de Dados</h5>
+                    <div class="skill-tags">
+                        <span>PostgreSQL</span>
+                        <span>MySQL</span>
+                        <span>Redis</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="bi bi-arrow-repeat"></i>
+                    </div>
+                    <h5>Filas / Cache</h5>
+                    <div class="skill-tags">
+                        <span>Celery</span>
+                        <span>Celery Beat</span>
+                        <span>Redis</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="bi bi-gear"></i>
+                    </div>
+                    <h5>DevOps / Infra</h5>
+                    <div class="skill-tags">
+                        <span>Docker</span>
+                        <span>Nginx</span>
+                        <span>SSL/TLS</span>
+                        <span>VPS</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="bi bi-cloud"></i>
+                    </div>
+                    <h5>Cloud</h5>
+                    <div class="skill-tags">
+                        <span>AWS</span>
+                        <span>Azure</span>
+                        <span>GCP</span>
+                        <span>Cloudflare R2</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projetos -->
+<section id="projetos" class="section-padding fade-in-section">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <h2 class="section-title">Projetos</h2>
+            <p class="section-subtitle">Sistemas e ferramentas em producao</p>
+        </div>
+
+        {% if user.is_superuser %}
+        <div class="text-center mb-4">
+            <a href="{% url 'pages:create' %}" class="btn btn-accent">
+                <i class="bi bi-plus-circle me-2"></i>Adicionar Projeto
+            </a>
+        </div>
+        {% endif %}
+
+        <div class="row g-4 projetos-grid">
+            {% if aplicativos %}
+            {% for app in aplicativos %}
+            <div class="col-12 col-md-6 projeto-item">
+                <div class="projeto-card h-100">
+                    <div class="projeto-header">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="projeto-icon">
+                                <i class="bi bi-folder2-open"></i>
+                            </div>
+                            <div>
+                                <h4 class="projeto-titulo mb-0">{{ app.titulo }}</h4>
+                                <span class="projeto-categoria">{{ app.categoria }}</span>
+                            </div>
+                            <div class="ms-auto">
+                                <span class="badge projeto-status {{ app.status }}">{{ app.get_status_display }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="projeto-descricao">{{ app.descricao }}</p>
+
+                    {% if app.tags.all %}
+                    <div class="projeto-tech mb-3">
+                        {% for tg in app.tags.all %}
+                        <span class="tech-tag">{{ tg.nome }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <div class="projeto-links mt-auto">
+                        {% if app.url %}
+                        <a href="{{ app.url }}" target="_blank" class="projeto-link">
+                            <i class="bi bi-box-arrow-up-right me-1"></i>Demo
+                        </a>
+                        {% endif %}
+                        {% if app.repositorio %}
+                        <a href="{{ app.repositorio }}" target="_blank" class="projeto-link">
+                            <i class="bi bi-github me-1"></i>Codigo
+                        </a>
+                        {% endif %}
+                    </div>
+
+                    {% if user.is_superuser %}
+                    <div class="admin-controls mt-3 pt-2 border-top">
+                        <div class="d-flex justify-content-end gap-2">
+                            <a href="{% url 'pages:update' app.pk %}" class="btn btn-warning btn-sm">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#deleteModal{{ app.pk }}">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
             {% if user.is_superuser %}
-            <div class="modal fade" id="deleteModal{{ app.pk }}" tabindex="-1"
-                aria-labelledby="deleteModalLabel{{ app.pk }}" aria-hidden="true">
+            <div class="modal fade" id="deleteModal{{ app.pk }}" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabel{{ app.pk }}">Confirmar Exclusao</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <h5 class="modal-title">Confirmar Exclusao</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body">
                             <p>Tem certeza que deseja remover <strong>"{{ app.titulo }}"</strong>?</p>
-                            <p style="color: var(--text-muted);">Esta acao nao pode ser desfeita.</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -167,11 +274,6 @@
                     <i class="bi bi-inboxes display-1 mb-3"></i>
                     <h4>Nenhum projeto cadastrado</h4>
                     <p>Os projetos aparecerao aqui quando forem adicionados.</p>
-                    {% if user.is_superuser %}
-                    <a href="{% url 'pages:create' %}" class="btn btn-accent mt-3">
-                        <i class="bi bi-plus-circle me-2"></i>Adicionar Primeiro Projeto
-                    </a>
-                    {% endif %}
                 </div>
             </div>
             {% endif %}
@@ -179,90 +281,31 @@
     </div>
 </section>
 
-<section id="sobre" class="section-padding section-dark">
+<!-- Formacao -->
+<section id="formacao" class="section-padding section-dark fade-in-section">
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6">
-                <div class="sobre-content">
-                    <h2 class="display-5 fw-bold mb-4" style="color: var(--text-primary);">Sobre Este Hub</h2>
-                    <p class="lead mb-4" style="color: var(--text-secondary);">Ponto central para acessar todos os projetos
-                        e ferramentas que estou desenvolvendo ou que ja estao em producao.</p>
+        <h2 class="section-title text-center mb-5">Formacao</h2>
 
-                    <div class="sobre-lista">
-                        <div class="sobre-item">
-                            <i class="bi bi-check-circle-fill me-3"></i>
-                            <span>Acesso rapido a todos os sistemas</span>
-                        </div>
-                        <div class="sobre-item">
-                            <i class="bi bi-check-circle-fill me-3"></i>
-                            <span>Status atualizado de cada projeto</span>
-                        </div>
-                        <div class="sobre-item">
-                            <i class="bi bi-check-circle-fill me-3"></i>
-                            <span>Links diretos para repositorios</span>
-                        </div>
-                        <div class="sobre-item">
-                            <i class="bi bi-check-circle-fill me-3"></i>
-                            <span>Organizacao centralizada</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="sobre-visual">
-                    <div class="hub-illustration">
-                        <div class="hub-visual-simples">
-                            <div class="hub-central-simples">
-                                <i class="bi bi-diagram-3"></i>
-                                <span>Hub</span>
-                            </div>
-                            <div class="hub-apps-simples">
-                                <div class="hub-app-simples">
-                                    <i class="bi bi-globe"></i>
-                                    <span>Web Apps</span>
-                                </div>
-                                <div class="hub-app-simples">
-                                    <i class="bi bi-terminal"></i>
-                                    <span>CLIs</span>
-                                </div>
-                                <div class="hub-app-simples">
-                                    <i class="bi bi-server"></i>
-                                    <span>APIs</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="status" class="section-padding">
-    <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <div class="status-info text-center">
-                    <h3 class="fw-bold mb-4">Legenda de Status</h3>
-                    <div class="row justify-content-center">
-                        <div class="col-md-4 mb-3">
-                            <div class="status-item">
-                                <span class="status-indicator completed"></span>
-                                <div>
-                                    <strong>Concluido</strong>
-                                    <p class="mb-0">Em producao</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="status-item">
-                                <span class="status-indicator development"></span>
-                                <div>
-                                    <strong>Em Desenvolvimento</strong>
-                                    <p class="mb-0">Em construcao</p>
-                                </div>
-                            </div>
-                        </div>
+            <div class="col-lg-8">
+                <div class="formacao-card">
+                    <div class="formacao-icon">
+                        <i class="bi bi-mortarboard"></i>
+                    </div>
+                    <div class="formacao-info">
+                        <h4>Bacharelado em Ciencia da Computacao</h4>
+                        <p class="formacao-local">Instituto Federal Goiano &mdash; Campus Morrinhos</p>
+                        <span class="formacao-status">Em andamento</span>
+                    </div>
+                </div>
+
+                <div class="formacao-card mt-3">
+                    <div class="formacao-icon">
+                        <i class="bi bi-translate"></i>
+                    </div>
+                    <div class="formacao-info">
+                        <h4>Ingles B2 Upper-Intermediate</h4>
+                        <p class="formacao-local">EF SET Certificate</p>
                     </div>
                 </div>
             </div>
@@ -270,19 +313,19 @@
     </div>
 </section>
 
-<section id="contato" class="section-padding section-dark">
+<!-- CTA -->
+<section class="section-padding fade-in-section">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">
-                <h2 class="display-5 fw-bold mb-4">Vamos Construir Algo Juntos?</h2>
-                <p class="lead mb-5">Todos os projetos sao open-source. Estou sempre aberto a colaboracoes
-                    e parcerias em desenvolvimento.</p>
-                <div class="contato-buttons">
-                    <a href="mailto:v1ctor_inacio@proton.me" class="btn btn-accent btn-lg">
-                        <i class="bi bi-envelope me-2"></i>Email
+                <h2 class="section-title mb-3">Vamos trabalhar juntos?</h2>
+                <p class="section-text mb-4">Confira meus projetos open-source ou entre em contato pelas redes.</p>
+                <div class="cta-buttons">
+                    <a href="https://github.com/vicct0r" target="_blank" class="btn btn-accent btn-lg">
+                        <i class="bi bi-github me-2"></i>GitHub
                     </a>
-                    <a href="https://github.com/vicct0r/tornac-dev" class="btn btn-outline-accent btn-lg">
-                        <i class="bi bi-github me-2"></i>Ver Codigo
+                    <a href="https://www.linkedin.com/in/victor-inacio-924625338" target="_blank" class="btn btn-outline-accent btn-lg">
+                        <i class="bi bi-linkedin me-2"></i>LinkedIn
                     </a>
                 </div>
             </div>
