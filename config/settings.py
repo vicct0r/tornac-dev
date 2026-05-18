@@ -41,8 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'storages',
-
     'pages',
     
 ]
@@ -182,29 +180,5 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': False,
         },
-    },
-}
-
-CLOUDFARE_R2_BUCKET = env('CLOUDFARE_R2_BUCKET')
-CLOUDFARE_R2_ACCESS_KEY = env('CLOUDFARE_R2_ACCESS_KEY')
-CLOUDFARE_R2_SECRET_KEY = env('CLOUDFARE_R2_SECRET_KEY')
-CLOUDFARE_R2_BUCKET_ENDPOINT = env('CLOUDFARE_R2_BUCKET_ENDPOINT')
-
-CLOUDFARE_R2_CONFIG_OPTIONS = {
-    "bucket_name": CLOUDFARE_R2_BUCKET,
-    "access_key": CLOUDFARE_R2_ACCESS_KEY,
-    "secret_key": CLOUDFARE_R2_SECRET_KEY,
-    "endpoint_url": CLOUDFARE_R2_BUCKET_ENDPOINT,
-    "signature_version": "s3v4"
-}
-
-STORAGES = {
-    "default": {
-        "BACKEND": "helpers.cloudfare.storages.MediaFileStorage",
-        "OPTIONS": CLOUDFARE_R2_CONFIG_OPTIONS
-    },
-    "staticfiles": {
-        "BACKEND": "helpers.cloudfare.storages.StaticFileStorage",
-        "OPTIONS": CLOUDFARE_R2_CONFIG_OPTIONS
     },
 }
