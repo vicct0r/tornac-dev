@@ -15,7 +15,7 @@ class Aplicativo(models.Model):
 
     ESTADOS_STATUS_CHOICES = (
         (CONCLUIDO, 'Concluído'),
-        (DESENVOLVIMENTO, 'Em Desenvolvimento')
+        (DESENVOLVIMENTO, 'Em Desenvolvimento'),
     )
     
     criado = models.DateTimeField(auto_now=True)
@@ -24,7 +24,7 @@ class Aplicativo(models.Model):
     status = models.CharField(max_length=2, choices=ESTADOS_STATUS_CHOICES, default=DESENVOLVIMENTO)
     descricao = models.TextField(null=True, blank=True)
     tags = models.ManyToManyField(Tag, related_name='taged', blank=True, null=True)
-    categoria = models.CharField(max_length=150)
+    categoria = models.CharField(blank=True, null=True, max_length=150)
     url = models.URLField(blank=True, null=True)
     repositorio = models.URLField(blank=True, null=True)
     imagem = StdImageField(
@@ -44,9 +44,8 @@ class Aplicativo(models.Model):
         delete_orphans=True,
         blank=True,
         null=True,
-        help_text="Imagem do projeto (400x200px recomendado)"
+        help_text="Imagem (400x200px recomendado)"
     )
-
 
     def __str__(self):
         return f"{self.titulo}"
