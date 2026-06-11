@@ -9,48 +9,65 @@
 <!-- Hero -->
 <section class="hero-section">
     <div class="container">
-        <div class="row align-items-center min-vh-100">
+        <div class="row align-items-center min-vh-100 g-5">
             <div class="col-lg-7">
                 <div class="hero-content">
-                    <p class="hero-greeting">Ola, eu sou</p>
-                    <h1 class="display-3 fw-bold mb-3">Victor Inacio</h1>
-                    <h2 class="hero-role mb-4">Backend Developer</h2>
-                    <p class="lead mb-4">Foco em <strong>Python</strong> e <strong>Django</strong> — construindo plataformas web
-                        com arquitetura em camadas, filas assincronas e infraestrutura gerenciada em VPS propria.</p>
+                    <span class="hero-pill">
+                        <span class="hero-pill-dot"></span>Aplicacoes em producao
+                    </span>
+                    <h1 class="display-4 fw-bold mb-3">Software web que entra no ar e resolve problemas reais.</h1>
+                    <p class="lead mb-4">Construo e mantenho aplicacoes web de ponta a ponta — APIs e backend,
+                        processos assincronos e <strong>infraestrutura propria gerenciada</strong>.
+                        Cada aplicacao abaixo esta no ar.</p>
                     <div class="hero-badges">
                         <span class="badge">Python</span>
                         <span class="badge">Django</span>
                         <span class="badge">PostgreSQL</span>
                         <span class="badge">Docker</span>
-                        <span class="badge">AWS</span>
+                        <span class="badge">Celery</span>
                     </div>
                     <div class="hero-actions mt-4">
-                        <a href="#projetos" class="btn btn-accent btn-lg">
-                            <i class="bi bi-folder2-open me-2"></i>Ver Projetos
+                        <a href="#aplicacoes" class="btn btn-accent btn-lg">
+                            <i class="bi bi-grid-1x2 me-2"></i>Ver aplicacoes
                         </a>
-                        <a href="https://github.com/vicct0r" target="_blank" class="btn btn-outline-accent btn-lg">
-                            <i class="bi bi-github me-2"></i>GitHub
+                        <a href="#contato" class="btn btn-outline-accent btn-lg">
+                            <i class="bi bi-send me-2"></i>Solicitar um projeto
                         </a>
                     </div>
                 </div>
             </div>
             <div class="col-lg-5 d-none d-lg-block">
-                <div class="hero-visual">
-                    <div class="terminal-window">
-                        <div class="terminal-header">
-                            <span class="terminal-dot red"></span>
-                            <span class="terminal-dot yellow"></span>
-                            <span class="terminal-dot green"></span>
+                <div class="status-panel">
+                    <div class="status-panel-head">
+                        <span class="status-dot-pulse"></span>
+                        <span>Aplicacoes no ar</span>
+                        <span class="status-panel-tag ms-auto">live</span>
+                    </div>
+                    <div class="status-panel-body">
+                        {% for app in aplicativos|slice:":4" %}
+                        <div class="status-row">
+                            <span class="status-row-name">{{ app.titulo }}</span>
+                            <span class="status-row-state {{ app.status }}">
+                                <span class="state-dot"></span>{{ app.get_status_display }}
+                            </span>
                         </div>
-                        <div class="terminal-body">
-                            <p><span class="terminal-prompt">$</span> whoami</p>
-                            <p class="terminal-output">backend-developer</p>
-                            <p><span class="terminal-prompt">$</span> python --version</p>
-                            <p class="terminal-output">Python 3.12</p>
-                            <p><span class="terminal-prompt">$</span> docker ps --format "table"</p>
-                            <p class="terminal-output">django &nbsp;nginx &nbsp;redis &nbsp;postgres</p>
-                            <p><span class="terminal-prompt">$</span> <span class="terminal-cursor">_</span></p>
+                        {% empty %}
+                        <div class="status-row">
+                            <span class="status-row-name">api-core</span>
+                            <span class="status-row-state cm"><span class="state-dot"></span>Online</span>
                         </div>
+                        <div class="status-row">
+                            <span class="status-row-name">worker-queue</span>
+                            <span class="status-row-state cm"><span class="state-dot"></span>Online</span>
+                        </div>
+                        <div class="status-row">
+                            <span class="status-row-name">dashboard</span>
+                            <span class="status-row-state ds"><span class="state-dot"></span>Beta</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="status-panel-foot">
+                        <i class="bi bi-hdd-network me-2"></i>Infraestrutura propria &middot; Docker + Nginx
                     </div>
                 </div>
             </div>
@@ -58,130 +75,19 @@
     </div>
 </section>
 
-<!-- Sobre -->
-<section id="sobre" class="section-padding fade-in-section">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 text-center">
-                <h2 class="section-title mb-4">Sobre Mim</h2>
-                <p class="section-text">
-                    Desenvolvedor Backend cursando <strong>Ciencia da Computacao</strong> no Instituto Federal Goiano.
-                    Tenho projetos proprios em producao — plataformas web com arquitetura
-                    em camadas, filas assincronas e infraestrutura gerenciada em VPS propria.
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Habilidades -->
-<section id="habilidades" class="section-padding section-dark fade-in-section">
-    <div class="container">
-        <h2 class="section-title text-center mb-5">Habilidades Tecnicas</h2>
-
-        <div class="row g-4">
-            <div class="col-md-6 col-lg-4">
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="bi bi-code-slash"></i>
-                    </div>
-                    <h5>Linguagens</h5>
-                    <div class="skill-tags">
-                        <span>Python</span>
-                        <span>Bash</span>
-                        <span>HTML</span>
-                        <span>CSS</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-4">
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="bi bi-layers"></i>
-                    </div>
-                    <h5>Frameworks</h5>
-                    <div class="skill-tags">
-                        <span>Django</span>
-                        <span>DRF</span>
-                        <span>Bootstrap</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-4">
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="bi bi-database"></i>
-                    </div>
-                    <h5>Banco de Dados</h5>
-                    <div class="skill-tags">
-                        <span>PostgreSQL</span>
-                        <span>MySQL</span>
-                        <span>Redis</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-4">
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="bi bi-arrow-repeat"></i>
-                    </div>
-                    <h5>Filas / Cache</h5>
-                    <div class="skill-tags">
-                        <span>Celery</span>
-                        <span>Celery Beat</span>
-                        <span>Redis</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-4">
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="bi bi-gear"></i>
-                    </div>
-                    <h5>DevOps / Infra</h5>
-                    <div class="skill-tags">
-                        <span>Docker</span>
-                        <span>Nginx</span>
-                        <span>SSL/TLS</span>
-                        <span>VPS</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-4">
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="bi bi-cloud"></i>
-                    </div>
-                    <h5>Cloud</h5>
-                    <div class="skill-tags">
-                        <span>AWS</span>
-                        <span>Azure</span>
-                        <span>GCP</span>
-                        <span>Cloudflare R2</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Projetos -->
-<section id="projetos" class="section-padding fade-in-section">
+<!-- Aplicacoes -->
+<section id="aplicacoes" class="section-padding fade-in-section">
     <div class="container">
         <div class="section-header text-center mb-5">
-            <h2 class="section-title">Projetos</h2>
-            <p class="section-subtitle">Sistemas e ferramentas em producao</p>
+            <span class="section-eyebrow">O hub</span>
+            <h2 class="section-title">Aplicacoes</h2>
+            <p class="section-subtitle">Sistemas e ferramentas no ar — demos abertas e projetos em producao.</p>
         </div>
 
         {% if user.is_superuser %}
         <div class="text-center mb-4">
             <a href="{% url 'pages:create' %}" class="btn btn-accent">
-                <i class="bi bi-plus-circle me-2"></i>Adicionar Projeto
+                <i class="bi bi-plus-circle me-2"></i>Adicionar aplicacao
             </a>
         </div>
         {% endif %}
@@ -194,7 +100,7 @@
                     <div class="projeto-header">
                         <div class="d-flex align-items-center gap-3 mb-3">
                             <div class="projeto-icon">
-                                <i class="bi bi-folder2-open"></i>
+                                <i class="bi bi-box"></i>
                             </div>
                             <div>
                                 <h4 class="projeto-titulo mb-0">{{ app.titulo }}</h4>
@@ -219,7 +125,7 @@
                     <div class="projeto-links mt-auto">
                         {% if app.url %}
                         <a href="{{ app.url }}" target="_blank" class="projeto-link">
-                            <i class="bi bi-box-arrow-up-right me-1"></i>Demo
+                            <i class="bi bi-box-arrow-up-right me-1"></i>Acessar aplicacao
                         </a>
                         {% endif %}
                         {% if app.repositorio %}
@@ -250,7 +156,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Confirmar Exclusao</h5>
+                            <h5 class="modal-title">Confirmar exclusao</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body">
@@ -271,9 +177,9 @@
             {% else %}
             <div class="col-12 text-center">
                 <div class="empty-state">
-                    <i class="bi bi-inboxes display-1 mb-3"></i>
-                    <h4>Nenhum projeto cadastrado</h4>
-                    <p>Os projetos aparecerao aqui quando forem adicionados.</p>
+                    <i class="bi bi-boxes display-1 mb-3"></i>
+                    <h4>Nenhuma aplicacao publicada</h4>
+                    <p>As aplicacoes aparecerao aqui assim que forem ao ar.</p>
                 </div>
             </div>
             {% endif %}
@@ -281,31 +187,59 @@
     </div>
 </section>
 
-<!-- Formacao -->
-<section id="formacao" class="section-padding section-dark fade-in-section">
+<!-- Tecnologia / Capacidades -->
+<section id="tecnologia" class="section-padding section-dark fade-in-section">
     <div class="container">
-        <h2 class="section-title text-center mb-5">Formacao</h2>
+        <div class="section-header text-center mb-5">
+            <span class="section-eyebrow">Como construo</span>
+            <h2 class="section-title">A base de cada aplicacao</h2>
+            <p class="section-subtitle">Decisoes tecnicas que mantem as aplicacoes rapidas, estaveis e no ar.</p>
+        </div>
 
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="formacao-card">
-                    <div class="formacao-icon">
-                        <i class="bi bi-mortarboard"></i>
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="bi bi-hdd-stack"></i>
                     </div>
-                    <div class="formacao-info">
-                        <h4>Bacharelado em Ciencia da Computacao</h4>
-                        <p class="formacao-local">Instituto Federal Goiano &mdash; Campus Morrinhos</p>
-                        <span class="formacao-status">Em andamento</span>
+                    <h5>Backend &amp; APIs</h5>
+                    <p class="skill-desc">APIs e regras de negocio em arquitetura em camadas, prontas para integrar com qualquer front ou cliente.</p>
+                    <div class="skill-tags">
+                        <span>Python</span>
+                        <span>Django</span>
+                        <span>DRF</span>
+                        <span>PostgreSQL</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="formacao-card mt-3">
-                    <div class="formacao-icon">
-                        <i class="bi bi-translate"></i>
+            <div class="col-md-6 col-lg-4">
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="bi bi-arrow-repeat"></i>
                     </div>
-                    <div class="formacao-info">
-                        <h4>Ingles B2 Upper-Intermediate</h4>
-                        <p class="formacao-local">EF SET Certificate</p>
+                    <h5>Processos assincronos</h5>
+                    <p class="skill-desc">Tarefas pesadas, agendamentos e cargas em fila — sem travar a experiencia do usuario.</p>
+                    <div class="skill-tags">
+                        <span>Celery</span>
+                        <span>Celery Beat</span>
+                        <span>Redis</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="bi bi-hdd-network"></i>
+                    </div>
+                    <h5>Infraestrutura propria</h5>
+                    <p class="skill-desc">Deploy, dominio, SSL e monitoramento gerenciados em VPS propria — controle total do que vai ao ar.</p>
+                    <div class="skill-tags">
+                        <span>Docker</span>
+                        <span>Nginx</span>
+                        <span>SSL/TLS</span>
+                        <span>VPS</span>
                     </div>
                 </div>
             </div>
@@ -313,20 +247,27 @@
     </div>
 </section>
 
-<!-- CTA -->
-<section class="section-padding fade-in-section">
+<!-- Contato -->
+<section id="contato" class="section-padding fade-in-section">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-8 text-center">
-                <h2 class="section-title mb-3">Vamos trabalhar juntos?</h2>
-                <p class="section-text mb-4">Confira meus projetos open-source ou entre em contato pelas redes.</p>
-                <div class="cta-buttons">
-                    <a href="https://github.com/vicct0r" target="_blank" class="btn btn-accent btn-lg">
-                        <i class="bi bi-github me-2"></i>GitHub
-                    </a>
-                    <a href="https://www.linkedin.com/in/victor-inacio-924625338" target="_blank" class="btn btn-outline-accent btn-lg">
-                        <i class="bi bi-linkedin me-2"></i>LinkedIn
-                    </a>
+            <div class="col-lg-8">
+                <div class="contato-card text-center">
+                    <span class="section-eyebrow">Contato</span>
+                    <h2 class="section-title mb-3">Tem uma ideia ou um problema para resolver?</h2>
+                    <p class="section-text mb-4">Descreva o que voce precisa e eu retorno com uma proposta — de uma
+                        aplicacao sob medida a uma automacao ou API. Sem formalidade, direto ao ponto.</p>
+                    <div class="cta-buttons">
+                        <a href="mailto:tornac.alves@gmail.com?subject=Solicitacao%20de%20projeto" class="btn btn-accent btn-lg">
+                            <i class="bi bi-envelope me-2"></i>Solicitar um projeto
+                        </a>
+                        <a href="https://www.linkedin.com/in/victor-inacio-924625338" target="_blank" class="btn btn-outline-accent btn-lg">
+                            <i class="bi bi-linkedin me-2"></i>LinkedIn
+                        </a>
+                        <a href="https://github.com/vicct0r" target="_blank" class="btn btn-outline-accent btn-lg">
+                            <i class="bi bi-github me-2"></i>GitHub
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

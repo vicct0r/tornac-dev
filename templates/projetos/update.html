@@ -106,7 +106,7 @@
                 <div class="form-card-header">
                     <h2 class="mb-0">
                         <i class="bi bi-pencil-square me-2"></i>
-                        Editar Projeto
+                        Editar Aplicacao
                     </h2>
                 </div>
 
@@ -125,7 +125,7 @@
                         <div class="form-check form-switch mb-4">
                             {{ form.ativo }}
                             <label class="form-check-label fw-medium" for="{{ form.ativo.id_for_label }}">
-                                Projeto Ativo
+                                Aplicacao ativa (visivel no hub)
                             </label>
                         </div>
 
@@ -140,9 +140,9 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="{{ form.url.id_for_label }}" class="form-label">URL do Projeto</label>
+                            <label for="{{ form.url.id_for_label }}" class="form-label">URL da Aplicacao</label>
                             {{ form.url }}
-                            <div class="form-text">Link para o projeto</div>
+                            <div class="form-text">Link da aplicacao no ar</div>
                             {% if form.url.errors %}
                             <div class="invalid-feedback d-block">{{ form.url.errors }}</div>
                             {% endif %}
